@@ -1,0 +1,58 @@
+.cost-check {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  &__headline {
+    margin-bottom: 24px;
+  }
+
+  &__daily-costs {
+    list-style-type: lower-alpha;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      width: 50%;
+      margin: 0 auto;
+    }
+  }
+
+  &__item {
+    display: flex;
+  }
+
+  &__day {
+    padding-right: 15px;
+  }
+
+  &__hourly-costs {
+    padding-right: 7px;
+  }
+
+  &__cost-value {
+    padding-right: 5px;
+  }
+
+  &__costs-history {
+    table {
+      border-collapse: collapse;
+      text-align: left;
+      margin: 0 auto;
+    }
+
+    thead {
+      tr {
+        background-color: lightgrey;
+        font-weight: bold;
+      }
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+    }
+  }
+}
