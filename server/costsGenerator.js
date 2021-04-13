@@ -150,7 +150,7 @@ const generateDailyCosts = (
     dayCosts.push({ 0: '0' });
   }
 
-  return dayCosts;
+  return [dayCosts, currentCostPerMonth];
 };
 
 /**
@@ -326,39 +326,39 @@ const calculateBudgetsAndCosts = (budget) => {
     });
 
     const dailyCots = {};
-    let month = 0;
+    let month = parseInt(dayAndBudget[0].split('.')[0], 10);
+
+    if (currentMonth !== month) {
+      currentMonth = month;
+      costPerMonth = 0;
+    }
 
     if (currentDayBudgets) {
-      dailyCots[Object.entries(currentDayBudgets)[0][0]] = generateDailyCosts(
+      const generatedCosts = generateDailyCosts(
         Object.entries(currentDayBudgets)[0][0],
         Object.entries(currentDayBudgets)[0][1],
         maxBudgets,
         costPerMonth
       );
-      costs.push(dailyCots);
 
-      month = parseInt(
-        Object.entries(currentDayBudgets)[0][0].split('.')[0],
-        10
-      );
+      dailyCots[Object.entries(currentDayBudgets)[0][0]] = generatedCosts[0];
+      costs.push(dailyCots);
+      costPerMonth = generatedCosts[1];
     } else if (dayAndBudget[1] !== 0) {
       const budgetObj = {};
 
       budgetObj['00:00'] = dayAndBudget[1].toString();
-      dailyCots[dayAndBudget[0]] = generateDailyCosts(
+
+      const generatedCosts = generateDailyCosts(
         dayAndBudget[0],
         [budgetObj],
         maxBudgets,
         costPerMonth
       );
 
+      dailyCots[dayAndBudget[0]] = generatedCosts[0];
       costs.push(dailyCots);
-      month = parseInt(dayAndBudget[0].split('.')[0], 10);
-    }
-
-    if (currentMonth !== month) {
-      currentMonth = month;
-      costPerMonth = 0;
+      costPerMonth = generatedCosts[1];
     }
   });
 
